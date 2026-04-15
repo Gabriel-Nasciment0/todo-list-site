@@ -5,7 +5,14 @@ import "./styles/App.css"
 export default function App() {
     const [tasks, setTasks] = useState(() => {
         const storedTasks = localStorage.getItem("tasks")
-        return storedTasks ? JSON.parse(storedTasks) : []
+        if (!storedTasks) return []
+        try {
+            const parsed = JSON.parse(storedTasks)
+            return Array.isArray(parsed) ? parsed : []
+        } catch (error) {
+            console.error("Failed to parse tasks from localStorage:", error)
+            return []
+        }
     })
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks))
