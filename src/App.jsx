@@ -1,25 +1,16 @@
-import { useState } from "react"
-import Dashboard from "./pages/Dashboard"
+import { useState, useEffect } from "react"
+import Dashboard from "./pages/Dashboard.jsx"
 import "./styles/App.css"
 
 export default function App() {
-    const [tasks, setTasks] = useState([
-        {
-            id: 1,
-            title: "Estudar",
-            status: "todo",
-        },
-        {
-            id: 2,
-            title: "treinar",
-            status: "progress",
-        },
-        {
-            id: 3,
-            title: "trabalhar",
-            status: "done",
-        },
-    ])
+    const [tasks, setTasks] = useState(() => {
+        const storedTasks = localStorage.getItem("tasks")
+        return storedTasks ? JSON.parse(storedTasks) : []
+    })
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(tasks))
+    }, [tasks])
+
     return (
         <Dashboard
             tasks={tasks}
