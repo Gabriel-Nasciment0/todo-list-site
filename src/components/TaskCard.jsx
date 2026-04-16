@@ -1,9 +1,18 @@
 import { useState } from "react"
+import "./TaskCard.css"
+
 export default function TaskCard({ task, setTasks }) {
     const [isEditing, setIsEditing] = useState(false)
     const [editText, setEditText] = useState(task.title)
     const [editDueDate, setEditDueDate] = useState(task.dueDate)
     const statusOrder = ["todo", "progress", "done"]
+    const today = new Date()
+    const localToday = [
+        today.getFullYear(),
+        String(today.getMonth() + 1).padStart(2, "0"),
+        String(today.getDate()).padStart(2, "0"),
+    ].join("-")
+
     const handleMoveBack = () => {
         setTasks((prevTasks) =>
             prevTasks.map((taskItem) => {
@@ -20,6 +29,7 @@ export default function TaskCard({ task, setTasks }) {
             }),
         )
     }
+
     const handleMoveForward = () => {
         setTasks((prevTasks) =>
             prevTasks.map((taskItem) => {
@@ -36,13 +46,16 @@ export default function TaskCard({ task, setTasks }) {
             }),
         )
     }
+
     const handleDelete = () => {
         setTasks((prevTasks) =>
             prevTasks.filter((taskItem) => task.id !== taskItem.id),
         )
     }
+
     const handleSaveEdit = () => {
         if (!editText.trim()) return
+
         setTasks((prevTasks) =>
             prevTasks.map((taskItem) => {
                 if (task.id !== taskItem.id) return taskItem
@@ -54,11 +67,12 @@ export default function TaskCard({ task, setTasks }) {
                 }
             }),
         )
+
         setIsEditing(false)
     }
 
     return (
-        <div>
+        <div className={`card ${task.status}`}>
             {isEditing ? (
                 <div>
                     <input
@@ -80,45 +94,51 @@ export default function TaskCard({ task, setTasks }) {
                     </button>
                 </div>
             ) : (
-                <div>
-                    <h1>{task.title}</h1>
-                    {task.createdAt && (
-                        <p>
-                            Criada em:{" "}
-                            {new Date(task.createdAt).toLocaleDateString()}
-                        </p>
-                    )}
-                    {task.dueDate &&
-                        (() => {
-                            const [year, month, day] = task.dueDate.split("-")
-                            const isLate =
-                                task.dueDate <
-                                new Date().toISOString().split("T")[0]
+                <div className="card-body">
+                    <h3 className="card-title">{task.title}</h3>
 
-                            return (
-                                <p style={{ color: isLate ? "red" : "black" }}>
-                                    Prazo: {day}/{month}/{year}
-                                </p>
-                            )
-                        })()}
-                    {task.status !== "todo" && (
-                        <button onClick={handleMoveBack}>Voltar</button>
-                    )}
+                    <div className="card-dates">
+                        {task.createdAt && (
+                            <span>
+                                {new Date(task.createdAt).toLocaleDateString()}
+                            </span>
+                        )}
 
-                    {task.status !== "done" && (
-                        <button onClick={handleMoveForward}>Avançar</button>
-                    )}
+                        {task.dueDate &&
+                            (() => {
+                                const [year, month, day] =
+                                    task.dueDate.split("-")
+                                const isLate = task.dueDate < localToday
 
-                    <button onClick={handleDelete}>Deletar</button>
-                    <button
-                        onClick={() => {
-                            setIsEditing(true)
-                            setEditText(task.title)
-                            setEditDueDate(task.dueDate || "")
-                        }}
-                    >
-                        Editar
-                    </button>
+                                return (
+                                    <span className={isLate ? "late" : ""}>
+                                        {day}/{month}/{year}
+                                    </span>
+                                )
+                            })()}
+                    </div>
+
+                    <div className="card-actions">
+                        {task.status !== "todo" && (
+                            <button onClick={handleMoveBack}>Voltar</button>
+                        )}
+
+                        {task.status !== "done" && (
+                            <button onClick={handleMoveForward}>Avancar</button>
+                        )}
+
+                        <button onClick={handleDelete}>Excluir</button>
+
+                        <button
+                            onClick={() => {
+                                setIsEditing(true)
+                                setEditText(task.title)
+                                setEditDueDate(task.dueDate || "")
+                            }}
+                        >
+                            Editar
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

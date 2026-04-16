@@ -1,0 +1,46 @@
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.card-dates {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.card-dates .late {
+    color: red;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-actions button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.card.todo {
+    border-left: 4px solid gray;
+}
+
+.card.progress {
+    border-left: 4px solid orange;
+}
+
+.card.done {
+    border-left: 4px solid green;
+    opacity: 0.7;
+}
