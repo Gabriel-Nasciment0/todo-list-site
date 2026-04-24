@@ -1,46 +1,76 @@
 .card {
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    transition: all 0.05s ease;
 }
 
-.card-title {
-    font-size: 14px;
-    margin-bottom: 8px;
+.card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
 }
 
-.card-dates {
-    display: flex;
-    justify-content: space-between;
+/* DRAG */
+.card.dragging {
+    opacity: 0.6;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* HANDLE */
+.drag-handle {
+    cursor: grab;
     font-size: 12px;
-    color: #666;
-    margin-bottom: 10px;
+    color: #9ca3af;
+    margin-bottom: 6px;
 }
 
-.card-dates .late {
-    color: red;
+/* TITLE */
+.card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
 }
 
-.card-actions {
-    display: flex;
-    justify-content: space-between;
+/* DATE */
+.due-date {
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    display: inline-block;
 }
 
-.card-actions button {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-}
-.card.todo {
-    border-left: 4px solid gray;
+/* STATUS DE DATA */
+.due-date.late {
+    background: #fee2e2;
+    color: #dc2626;
 }
 
-.card.progress {
-    border-left: 4px solid orange;
+.due-date.soon {
+    background: #fef3c7;
+    color: #d97706;
 }
 
-.card.done {
-    border-left: 4px solid green;
-    opacity: 0.7;
+.due-date.normal {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+/* PRIORIDADE */
+.priority {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.priority.high {
+    color: #dc2626;
+}
+
+.priority.medium {
+    color: #d97706;
+}
+
+.priority.low {
+    color: #059669;
 }

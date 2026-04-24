@@ -1,145 +1,154 @@
 import { useState } from "react"
+import { useDraggable } from "@dnd-kit/core"
 import "./TaskCard.css"
 
 export default function TaskCard({ task, setTasks }) {
     const [isEditing, setIsEditing] = useState(false)
     const [editText, setEditText] = useState(task.title)
-    const [editDueDate, setEditDueDate] = useState(task.dueDate)
-    const statusOrder = ["todo", "progress", "done"]
-    const today = new Date()
-    const localToday = [
-        today.getFullYear(),
-        String(today.getMonth() + 1).padStart(2, "0"),
-        String(today.getDate()).padStart(2, "0"),
-    ].join("-")
+    const [editDueDate, setEditDueDate] = useState(task.dueDate || "")
+    const [editPriority, setEditPriority] = useState(task.priority || "medium")
 
-    const handleMoveBack = () => {
-        setTasks((prevTasks) =>
-            prevTasks.map((taskItem) => {
-                if (task.id !== taskItem.id) return taskItem
-
-                const currentIndex = statusOrder.indexOf(taskItem.status)
-
-                if (currentIndex === 0) return taskItem
-
-                return {
-                    ...taskItem,
-                    status: statusOrder[currentIndex - 1],
-                }
-            }),
-        )
-    }
-
-    const handleMoveForward = () => {
-        setTasks((prevTasks) =>
-            prevTasks.map((taskItem) => {
-                if (task.id !== taskItem.id) return taskItem
-
-                const currentIndex = statusOrder.indexOf(taskItem.status)
-
-                if (currentIndex === statusOrder.length - 1) return taskItem
-
-                return {
-                    ...taskItem,
-                    status: statusOrder[currentIndex + 1],
-                }
-            }),
-        )
-    }
+    const { attributes, listeners, setNodeRef, transform, isDragging } =
+        useDraggable({
+            id: task.id,
+            disabled: isEditing,
+        })
 
     const handleDelete = () => {
-        setTasks((prevTasks) =>
-            prevTasks.filter((taskItem) => task.id !== taskItem.id),
-        )
+        setTasks((prev) => prev.filter((t) => t.id !== task.id))
     }
 
     const handleSaveEdit = () => {
         if (!editText.trim()) return
 
-        setTasks((prevTasks) =>
-            prevTasks.map((taskItem) => {
-                if (task.id !== taskItem.id) return taskItem
-
-                return {
-                    ...taskItem,
-                    title: editText,
-                    dueDate: editDueDate || null,
-                }
-            }),
+        setTasks((prev) =>
+            prev.map((t) =>
+                t.id === task.id
+                    ? {
+                          ...t,
+                          title: editText.trim(),
+                          dueDate: editDueDate || null,
+                          priority: editPriority,
+                      }
+                    : t,
+            ),
         )
 
         setIsEditing(false)
     }
 
+    const handleCancelEdit = () => {
+        setEditText(task.title)
+        setEditDueDate(task.dueDate || "")
+        setEditPriority(task.priority || "medium")
+        setIsEditing(false)
+    }
+
+    const getDateStatus = () => {
+        if (!task.dueDate) return ""
+
+        const today = [
+            new Date().getFullYear(),
+            String(new Date().getMonth() + 1).padStart(2, "0"),
+            String(new Date().getDate()).padStart(2, "0"),
+        ].join("-")
+
+        if (task.dueDate < today) return "late"
+
+        const diffDays =
+            (new Date(task.dueDate) - new Date(today)) / (1000 * 60 * 60 * 24)
+
+        if (diffDays <= 5) return "soon"
+
+        return "normal"
+    }
+
+    const dateStatus = getDateStatus()
+
+    const formatDate = (date) => {
+        const [year, month, day] = date.split("-")
+        return `${day}/${month}/${year}`
+    }
+
     return (
-        <div className={`card ${task.status}`}>
+        <div
+            ref={setNodeRef}
+            className={`card ${isDragging ? "dragging" : ""}`}
+            style={{
+                transform: transform
+                    ? `translate(${transform.x}px, ${transform.y}px)`
+                    : undefined,
+                opacity: isDragging ? 0.5 : 1,
+                zIndex: isDragging ? 1000 : "auto",
+                touchAction: "none",
+            }}
+        >
+            {!isEditing && (
+                <div
+                    className="drag-handle"
+                    {...listeners}
+                    {...attributes}
+                >
+                    ⠿
+                </div>
+            )}
+
             {isEditing ? (
                 <div>
                     <input
-                        type="text"
                         value={editText}
                         onChange={(e) => setEditText(e.target.value)}
                     />
+
                     <input
                         type="date"
                         value={editDueDate}
                         onChange={(e) => setEditDueDate(e.target.value)}
                     />
-                    <button onClick={() => setEditDueDate("")}>
-                        Remover prazo
-                    </button>
+
+                    <select
+                        value={editPriority}
+                        onChange={(e) => setEditPriority(e.target.value)}
+                    >
+                        <option value="high">Alta</option>
+                        <option value="medium">Média</option>
+                        <option value="low">Baixa</option>
+                    </select>
+
                     <button onClick={handleSaveEdit}>Salvar</button>
-                    <button onClick={() => setIsEditing(false)}>
-                        Cancelar
-                    </button>
+                    <button onClick={handleCancelEdit}>Cancelar</button>
                 </div>
             ) : (
-                <div className="card-body">
-                    <h3 className="card-title">{task.title}</h3>
+                <>
+                    <h3>{task.title}</h3>
 
-                    <div className="card-dates">
-                        {task.createdAt && (
-                            <span>
-                                {new Date(task.createdAt).toLocaleDateString()}
-                            </span>
-                        )}
-
-                        {task.dueDate &&
-                            (() => {
-                                const [year, month, day] =
-                                    task.dueDate.split("-")
-                                const isLate = task.dueDate < localToday
-
-                                return (
-                                    <span className={isLate ? "late" : ""}>
-                                        {day}/{month}/{year}
-                                    </span>
-                                )
-                            })()}
-                    </div>
-
-                    <div className="card-actions">
-                        {task.status !== "todo" && (
-                            <button onClick={handleMoveBack}>Voltar</button>
-                        )}
-
-                        {task.status !== "done" && (
-                            <button onClick={handleMoveForward}>Avancar</button>
-                        )}
-
-                        <button onClick={handleDelete}>Excluir</button>
-
-                        <button
-                            onClick={() => {
-                                setIsEditing(true)
-                                setEditText(task.title)
-                                setEditDueDate(task.dueDate || "")
-                            }}
+                    {task.dueDate && (
+                        <p
+                            className={`due-date ${dateStatus} ${task.priority}`}
                         >
-                            Editar
-                        </button>
+                            {formatDate(task.dueDate)}
+                        </p>
+                    )}
+
+                    <div className={`priority ${task.priority}`}>
+                        {task.priority === "high" && "Alta"}
+                        {task.priority === "medium" && "Média"}
+                        {task.priority === "low" && "Baixa"}
                     </div>
-                </div>
+
+                    <button onClick={handleDelete}>Excluir</button>
+
+                    <button
+                        onClick={() => {
+                            setIsEditing(true)
+                            setEditText(task.title)
+                            setEditDueDate(task.dueDate || "")
+                            setEditPriority(task.priority || "medium")
+                        }}
+                    >
+                        Editar
+                    </button>
+                </>
             )}
         </div>
     )

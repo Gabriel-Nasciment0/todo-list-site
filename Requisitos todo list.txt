@@ -1,0 +1,79 @@
+Projeto todo list
+
+🧩 1. Requisitos básicos (mínimo pra funcionar)
+
+Se não tiver isso, é só um “rascunho de app”:
+
+Criar tarefa
+Listar tarefas
+Marcar como concluída
+Deletar tarefa
+
+👉 Estrutura simples:
+
+título
+status (feito / não feito)
+⚙️ 2. Intermediário (já vira projeto de portfólio)
+
+Aqui começa a ficar interessante:
+
+Editar tarefa
+Filtro (todas / feitas / pendentes)
+Data de criação ou prazo
+Persistência de dados
+LocalStorage (frontend) ou banco (fullstack)
+
+👉 Extra importante:
+
+Feedback visual (riscar tarefa concluída, cores, etc)
+🚀 3. Avançado (nível profissional tipo o layout que você mandou)
+
+Agora você chega perto de algo estilo Notion/Trello:
+
+Organização
+Colunas (To Do / Doing / Done)
+Drag and drop (arrastar tarefas)
+Prioridade (alta, média, baixa)
+Dados
+Usuário (login opcional)
+Salvar em banco (Firebase, Supabase, etc)
+UI/UX
+Loading states
+Empty states (“nenhuma tarefa ainda”)
+Animações leves
+Responsividade
+🧠 4. Diferenciais (isso aqui destaca MUITO seu projeto)
+
+Se você quiser impressionar:
+
+Busca de tarefas
+Tags ou categorias
+Notificações
+Dark mode
+Histórico de ações
+Compartilhar lista
+🏗️ Estrutura recomendada (React)
+
+Pra você não se perder:
+
+components/
+TaskCard
+Column
+Sidebar
+pages/
+Dashboard
+hooks/
+useTasks
+services/
+api.js ou localStorage.js
+💡 Dica direta pra você (importante)
+
+Baseado no layout que você mandou:
+
+👉 Faz assim:
+
+Começa simples (CRUD)
+Depois transforma em kanban (colunas)
+Depois adiciona drag and drop
+
+Isso vira um projeto MUITO forte no portfólio.

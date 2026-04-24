@@ -1,17 +1,16 @@
 .filter-bar {
+    margin-top: 10px;
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .filter-bar button {
     padding: 6px 10px;
-    border: none;
-    background: #eee;
-    border-radius: 6px;
-    cursor: pointer;
+    border-radius: 8px;
+    background: #f3f4f6;
 }
 
 .filter-bar button.active {
-    background: #333;
+    background: #111827;
     color: white;
 }

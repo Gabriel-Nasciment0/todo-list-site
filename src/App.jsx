@@ -4,18 +4,33 @@ import "./styles/App.css"
 
 export default function App() {
     const [tasks, setTasks] = useState(() => {
-        const storedTasks = localStorage.getItem("tasks")
-        if (!storedTasks) return []
         try {
-            const parsed = JSON.parse(storedTasks)
-            return Array.isArray(parsed) ? parsed : []
-        } catch (error) {
-            console.error("Failed to parse tasks from localStorage:", error)
+            const stored = localStorage.getItem("tasks")
+            if (!stored) return []
+
+            const parsed = JSON.parse(stored)
+            if (!Array.isArray(parsed)) return []
+
+            return parsed.map((t) => ({
+                id: t.id ?? Date.now(),
+                title: t.title ?? "",
+                status: t.status ?? "todo",
+                createdAt: t.createdAt ?? new Date().toISOString(),
+                dueDate: t.dueDate ?? null,
+                priority: t.priority ?? "medium",
+            }))
+        } catch (e) {
+            console.error("Erro ao carregar tasks:", e)
             return []
         }
     })
+
     useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks))
+        try {
+            localStorage.setItem("tasks", JSON.stringify(tasks))
+        } catch (e) {
+            console.error("Erro ao salvar tasks:", e)
+        }
     }, [tasks])
 
     return (

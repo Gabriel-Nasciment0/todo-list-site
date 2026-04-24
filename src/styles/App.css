@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Inter, system-ui, sans-serif;
+    background: linear-gradient(135deg, #e9edf5, #f8fafc);
+    color: #111827;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+input,
+select {
+    border: none;
+    outline: none;
+}
