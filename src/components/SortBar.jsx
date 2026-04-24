@@ -1,14 +1,15 @@
 import { useState, useRef, useEffect } from "react"
-import "./FilterBar.css"
+import "./SortBar.css"
 
-export default function FilterBar({ filter, setFilter }) {
+export default function SortBar({ sortType, setSortType }) {
     const [open, setOpen] = useState(false)
     const ref = useRef()
 
-    const filters = [
-        { label: "Todas", value: "all" },
-        { label: "Concluídas", value: "done" },
-        { label: "Pendentes", value: "pending" },
+    const options = [
+        { label: "Prioridade", value: "priority" },
+        { label: "Prazo", value: "dueDate" },
+        { label: "Prioridade + Prazo", value: "priority_due" },
+        { label: "Criação", value: "createdAt" },
     ]
 
     useEffect(() => {
@@ -25,30 +26,28 @@ export default function FilterBar({ filter, setFilter }) {
 
     return (
         <div
-            className="filter-dropdown"
+            className="sort-dropdown"
             ref={ref}
         >
             <button
-                className="filter-button"
-                onClick={() => setOpen((prev) => !prev)}
+                className="sort-button"
+                onClick={() => setOpen(!open)}
             >
-                {filters.find((f) => f.value === filter)?.label} ▼
+                {options.find((o) => o.value === sortType)?.label || "Sort"} ▼
             </button>
 
             {open && (
-                <div className="filter-menu">
-                    {filters.map((item) => (
+                <div className="sort-menu">
+                    {options.map((opt) => (
                         <button
-                            key={item.value}
-                            className={`filter-item ${
-                                filter === item.value ? "active" : ""
-                            }`}
+                            key={opt.value}
+                            className={`sort-item ${sortType === opt.value ? "active" : ""}`}
                             onClick={() => {
-                                setFilter(item.value)
+                                setSortType(opt.value)
                                 setOpen(false)
                             }}
                         >
-                            {item.label}
+                            {opt.label}
                         </button>
                     ))}
                 </div>

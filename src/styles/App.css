@@ -8,16 +8,14 @@ body {
     font-family: Inter, system-ui, sans-serif;
     background: linear-gradient(135deg, #e9edf5, #f8fafc);
     color: #111827;
+
+    -webkit-font-smoothing: antialiased;
 }
 
 button {
     cursor: pointer;
     border: none;
     background: none;
-}
 
-input,
-select {
-    border: none;
-    outline: none;
+    transition: all 0.15s ease;
 }

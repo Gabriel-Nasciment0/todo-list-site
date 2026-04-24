@@ -1,14 +1,16 @@
 import {
     DndContext,
+    DragOverlay,
     PointerSensor,
     useSensor,
     useSensors,
-    pointerWithin,
+    closestCorners,
 } from "@dnd-kit/core"
 import { useState } from "react"
 import Column from "../components/Column.jsx"
-import TaskForm from "../components/TaskForm.jsx"
-import FilterBar from "../components/FilterBar.jsx"
+import TopBar from "../components/TopBar.jsx"
+import BoardHeader from "../components/BorderHeader.jsx"
+import { TaskCardPreview } from "../components/TaskCard.jsx"
 import "./Dashboard.css"
 
 const VALID_STATUS = ["todo", "progress", "done"]
@@ -18,7 +20,8 @@ export default function Dashboard({ tasks, setTasks }) {
     const [filter, setFilter] = useState("all")
     const [dueDate, setDueDate] = useState("")
     const [priority, setPriority] = useState("medium")
-
+    const [sortType, setSortType] = useState("priority")
+    const [activeTaskId, setActiveTaskId] = useState(null)
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: { distance: 8 },
@@ -45,7 +48,13 @@ export default function Dashboard({ tasks, setTasks }) {
         setPriority("medium")
     }
 
+    const handleDragStart = ({ active }) => {
+        setActiveTaskId(active.id)
+    }
+
     const handleDragEnd = ({ active, over }) => {
+        setActiveTaskId(null)
+
         if (!over) return
 
         const taskId = active.id
@@ -60,6 +69,10 @@ export default function Dashboard({ tasks, setTasks }) {
         )
     }
 
+    const handleDragCancel = () => {
+        setActiveTaskId(null)
+    }
+
     const filteredTasks = tasks.filter(
         (task) =>
             filter === "all" ||
@@ -67,65 +80,63 @@ export default function Dashboard({ tasks, setTasks }) {
             (filter === "pending" && task.status !== "done"),
     )
 
+    const activeTask =
+        tasks.find((task) => task.id === activeTaskId) || null
+
     return (
         <div className="container">
-            {/* 🔹 HEADER GLOBAL (igual ao da imagem) */}
-            <header className="topbar">
-                <div className="topbar-left">
-                    <h1>Welcome back 👋</h1>
-                    <span>Seu workspace</span>
-                </div>
+            <TopBar />
 
-                <div className="topbar-right">
-                    <input placeholder="Search..." />
-                    <button>Filter</button>
-                    <button className="avatar">G</button>
-                </div>
-            </header>
+            <BoardHeader
+                filter={filter}
+                setFilter={setFilter}
+                newTask={newTask}
+                setNewTask={setNewTask}
+                dueDate={dueDate}
+                setDueDate={setDueDate}
+                priority={priority}
+                setPriority={setPriority}
+                sortType={sortType}
+                setSortType={setSortType}
+                onAdd={handleAddTask}
+            />
 
-            {/* 🔹 CONTEÚDO */}
             <div className="content">
-                {/* Header da página */}
-                <div className="page-header">
-                    <TaskForm
-                        newTask={newTask}
-                        setNewTask={setNewTask}
-                        dueDate={dueDate}
-                        setDueDate={setDueDate}
-                        priority={priority}
-                        setPriority={setPriority}
-                        onAdd={handleAddTask}
-                    />
-
-                    <FilterBar
-                        filter={filter}
-                        setFilter={setFilter}
-                    />
-                </div>
-
-                {/* Board */}
                 <DndContext
                     sensors={sensors}
-                    collisionDetection={pointerWithin}
+                    collisionDetection={closestCorners}
+                    autoScroll={false}
+                    onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd}
+                    onDragCancel={handleDragCancel}
                 >
                     <section className="board">
                         <Column
                             status="todo"
                             tasks={filteredTasks}
                             setTasks={setTasks}
+                            sortType={sortType}
+                            activeTaskId={activeTaskId}
                         />
                         <Column
                             status="progress"
                             tasks={filteredTasks}
                             setTasks={setTasks}
+                            sortType={sortType}
+                            activeTaskId={activeTaskId}
                         />
                         <Column
                             status="done"
                             tasks={filteredTasks}
                             setTasks={setTasks}
+                            sortType={sortType}
+                            activeTaskId={activeTaskId}
                         />
                     </section>
+
+                    <DragOverlay>
+                        {activeTask ? <TaskCardPreview task={activeTask} /> : null}
+                    </DragOverlay>
                 </DndContext>
             </div>
         </div>

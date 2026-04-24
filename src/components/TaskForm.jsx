@@ -19,27 +19,34 @@ export default function TaskForm({
             onSubmit={handleSubmit}
             className="task-form"
         >
-            <input
-                type="text"
-                placeholder="Nova Task"
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-            />
-
-            <input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-            />
-
-            <select
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-            >
-                <option value="high">Alta</option>
-                <option value="medium">Média</option>
-                <option value="low">Baixa</option>
-            </select>
+            <div className="form-group">
+                <label htmlFor="title">Título</label>
+                <input
+                    type="text"
+                    placeholder="Nova tarefa"
+                    value={newTask}
+                    onChange={(e) => setNewTask(e.target.value)}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="dueDate">Prazo</label>
+                <input
+                    type="date"
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="priority">Prioridade</label>
+                <select
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                >
+                    <option value="high">Alta</option>
+                    <option value="medium">Média</option>
+                    <option value="low">Baixa</option>
+                </select>
+            </div>
 
             <button
                 type="submit"

@@ -1,38 +1,172 @@
+/* =========================
+   ANIMACOES
+========================= */
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   CARD BASE
+========================= */
+
 .card {
     background: white;
     border-radius: 12px;
-    padding: 12px;
+    padding: 20px 15px;
     border: 1px solid #e5e7eb;
-    transition: all 0.05s ease;
+    animation: fadeSlide 0.25s ease;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease,
+        border-color 0.2s ease;
+    will-change: transform;
 }
 
 .card:hover {
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* DRAG */
-.card.dragging {
-    opacity: 0.6;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+.card.drag-placeholder {
+    opacity: 0.2;
+    border-style: dashed;
+    box-shadow: none;
+}
+
+.card.drag-placeholder:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.card.drag-overlay {
+    width: 280px;
+    opacity: 0.98;
+    transform: rotate(2deg);
+    box-shadow: 0 18px 45px rgba(17, 24, 39, 0.24);
+    border-color: #c7d2fe;
+    pointer-events: none;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
 }
 
 /* HANDLE */
 .drag-handle {
-    cursor: grab;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    margin-bottom: 8px;
     color: #9ca3af;
-    margin-bottom: 6px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    letter-spacing: -1px;
+    font-weight: 700;
 }
 
-/* TITLE */
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.card-menu {
+    position: relative;
+}
+
+.menu-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    line-height: 1;
+}
+
+.menu-trigger:hover {
+    background: #f3f4f6;
+}
+
+.menu-dropdown {
+    position: absolute;
+    right: -8px;
+    top: -55px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    padding: 4px;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.95);
+    transform-origin: top right;
+    animation: dropdownFade 0.15s ease forwards;
+}
+
+.menu-dropdown button {
+    padding: 8px 10px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.menu-dropdown button:hover {
+    background: #f3f4f6;
+}
+
+.menu-dropdown .danger {
+    color: #dc2626;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
 .card h3 {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 6px;
 }
 
-/* DATE */
 .due-date {
     font-size: 12px;
     padding: 2px 6px;
@@ -40,7 +174,6 @@
     display: inline-block;
 }
 
-/* STATUS DE DATA */
 .due-date.late {
     background: #fee2e2;
     color: #dc2626;
@@ -56,11 +189,11 @@
     color: #374151;
 }
 
-/* PRIORIDADE */
 .priority {
     margin-top: 6px;
     font-size: 12px;
     font-weight: 500;
+    transition: color 0.2s ease;
 }
 
 .priority.high {
@@ -73,4 +206,76 @@
 
 .priority.low {
     color: #059669;
+}
+
+/* =========================
+   EDIT MODE
+========================= */
+
+.card-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.edit-input,
+.edit-select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 13px;
+    transition: all 0.15s ease;
+}
+
+.edit-input:focus,
+.edit-select:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: white;
+}
+
+.edit-row {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-row input {
+    flex: 1;
+}
+
+.edit-row select {
+    width: 120px;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn.primary {
+    background: #111827;
+    color: white;
+}
+
+.btn.primary:hover {
+    opacity: 0.9;
+}
+
+.btn.secondary {
+    background: #e5e7eb;
+}
+
+.btn.secondary:hover {
+    background: #d1d5db;
 }

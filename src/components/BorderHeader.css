@@ -1,0 +1,156 @@
+/* =========================
+   ANIMAÇÕES
+========================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   BOARD HEADER
+========================= */
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 12px 16px;
+
+    background: #fafafa;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.board-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* BOTÕES */
+
+.board-header button {
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+
+    transition: all 0.15s ease;
+}
+
+.board-header button:hover {
+    background: #e5e7eb;
+}
+
+.board-header .active {
+    background: #e5e7eb;
+    font-weight: 500;
+}
+
+.board-header .primary {
+    background: #111827;
+    color: white;
+}
+
+.board-header .primary:hover {
+    background: #1f2937;
+}
+
+/* =========================
+   DROPDOWN (se ainda usar)
+========================= */
+
+.task-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    margin-top: 8px;
+
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+    z-index: 20;
+
+    animation: scaleIn 0.15s ease;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 999;
+
+    animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+    background: white;
+
+    padding: 20px;
+    border-radius: 12px;
+
+    width: 100%;
+    max-width: 360px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    animation: scaleIn 0.2s ease;
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.close-btn {
+    align-self: flex-end;
+
+    background: #e5e7eb;
+    border: none;
+
+    padding: 6px 8px;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    transition: background 0.15s ease;
+}
+
+.close-btn:hover {
+    background: #d1d5db;
+}

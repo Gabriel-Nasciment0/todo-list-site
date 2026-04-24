@@ -4,7 +4,13 @@ import "./Column.css"
 
 const priorityOrder = { high: 0, medium: 1, low: 2 }
 
-export default function Column({ tasks, status, setTasks }) {
+export default function Column({
+    tasks,
+    status,
+    setTasks,
+    sortType,
+    activeTaskId,
+}) {
     const statusMap = {
         todo: "To Do",
         progress: "Em Progresso",
@@ -14,20 +20,41 @@ export default function Column({ tasks, status, setTasks }) {
     const { setNodeRef, isOver } = useDroppable({
         id: status,
     })
-    const sortTasks = (a, b) => {
-        const pA = priorityOrder[a.priority || "medium"]
-        const pB = priorityOrder[b.priority || "medium"]
 
-        // 1. prioridade
-        if (pA !== pB) return pA - pB
-
-        // 2. prazo
+    const compareDueDate = (a, b) => {
         if (!a.dueDate && !b.dueDate) return 0
-        if (!a.dueDate) return 1 // A vai pra baixo
-        if (!b.dueDate) return -1 // B vai pra baixo
-
+        if (!a.dueDate) return 1
+        if (!b.dueDate) return -1
         return a.dueDate.localeCompare(b.dueDate)
     }
+
+    const sortTasks = (a, b) => {
+        if (sortType === "priority") {
+            const pA = priorityOrder[a.priority || "medium"]
+            const pB = priorityOrder[b.priority || "medium"]
+            return pA - pB
+        }
+
+        if (sortType === "dueDate") {
+            return compareDueDate(a, b)
+        }
+
+        if (sortType === "priority_due") {
+            const pA = priorityOrder[a.priority || "medium"]
+            const pB = priorityOrder[b.priority || "medium"]
+
+            if (pA !== pB) return pA - pB
+
+            return compareDueDate(a, b)
+        }
+
+        if (sortType === "createdAt") {
+            return a.createdAt.localeCompare(b.createdAt)
+        }
+
+        return 0
+    }
+
     const filteredTasks = tasks
         .filter((task) => task.status === status)
         .sort(sortTasks)
@@ -35,10 +62,7 @@ export default function Column({ tasks, status, setTasks }) {
     return (
         <div
             ref={setNodeRef}
-            className={`column ${status}`}
-            style={{
-                background: isOver ? "#e0e7ff" : "#f4f5f7",
-            }}
+            className={`column ${status} ${isOver ? "is-over" : ""}`}
         >
             <div className="column-header">
                 <h2>{statusMap[status]}</h2>
@@ -54,6 +78,7 @@ export default function Column({ tasks, status, setTasks }) {
                             key={task.id}
                             task={task}
                             setTasks={setTasks}
+                            isActiveDrag={task.id === activeTaskId}
                         />
                     ))
                 )}

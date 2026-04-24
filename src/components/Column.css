@@ -1,27 +1,86 @@
+/* =========================
+   COLUMN BASE
+========================= */
+
 .column {
-    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    min-width: 370px;
+    max-width: 370px;
+    flex-shrink: 0;
     background: #f9fafb;
     border-radius: 12px;
     padding: 12px;
     border: 1px solid #e5e7eb;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
+
+.column:hover {
+    background: #f3f4f6;
+}
+
+.column.is-over {
+    background: #eef2ff;
+    border-color: #818cf8;
+    box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.25);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .column-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
     font-weight: 600;
+    font-size: 14px;
     color: #374151;
 }
+
+.column-header span {
+    font-size: 12px;
+    background: #e5e7eb;
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+/* =========================
+   CONTENT
+========================= */
 
 .column-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    min-height: 100px;
 }
 
+.column-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.column-content::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
 .empty {
-    font-size: 14px;
+    font-size: 13px;
     color: #9ca3af;
     text-align: center;
+    margin-top: 10px;
 }
