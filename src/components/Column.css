@@ -5,18 +5,14 @@
 .column {
     display: flex;
     flex-direction: column;
-    min-width: 370px;
-    max-width: 370px;
-    flex-shrink: 0;
+
+    flex: 1;
+    min-width: 0;
+
     background: #f9fafb;
     border-radius: 12px;
     padding: 12px;
     border: 1px solid #e5e7eb;
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
 }
 
 .column:hover {
@@ -83,4 +79,26 @@
     color: #9ca3af;
     text-align: center;
     margin-top: 10px;
+}
+
+@media (max-width: 1024px) {
+    .column {
+        min-width: 280px;
+        max-width: 280px;
+        flex-shrink: 0;
+
+        scroll-snap-align: start;
+    }
+}
+
+@media (max-width: 768px) {
+    .column {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .column-content {
+        overflow-y: visible;
+    }
 }

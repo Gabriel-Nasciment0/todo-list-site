@@ -154,3 +154,26 @@
 .close-btn:hover {
     background: #d1d5db;
 }
+
+@media (max-width: 1024px) {
+    .board-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    .board-header button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    .board-left {
+        width: 100%;
+    }
+    .board-right {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .board-right > * {
+    flex-shrink: 0;
+}
+}

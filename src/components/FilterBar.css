@@ -13,76 +13,51 @@
     }
 }
 
-/* =========================
-   WRAPPER
-========================= */
-
 .filter-dropdown {
     position: relative;
 }
 
-/* =========================
-   BOTAO
-========================= */
-
 .filter-button {
     background: #f3f4f6;
-    border: 1px solid transparent;
     padding: 6px 12px;
     border-radius: 8px;
-    cursor: pointer;
     font-size: 13px;
-    transition: all 0.2s ease;
 }
-
-.filter-button:hover {
-    background: #e5e7eb;
-}
-
-.filter-button:active {
-    transform: scale(0.96);
-}
-
-/* =========================
-   MENU
-========================= */
 
 .filter-menu {
     position: absolute;
     top: 110%;
-    right: 0;
+    left: 0;
+
+    width: 120px;
+
     background: white;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
     display: flex;
     flex-direction: column;
-    min-width: 180px;
-    padding: 6px;
+    padding: 5px;
+
     z-index: 20;
+
     opacity: 0;
     transform: translateY(-6px) scale(0.96);
-    transform-origin: top right;
+    transform-origin: top left;
+
     animation: dropdownIn 0.18s ease forwards;
 }
 
 .filter-item {
     padding: 8px 10px;
     border-radius: 6px;
-    background: none;
-    border: none;
     text-align: left;
-    cursor: pointer;
     font-size: 13px;
-    transition: all 0.15s ease;
 }
 
-.filter-item:hover {
-    background: #f3f4f6;
-    transform: translateX(2px);
-}
-
-.filter-item.active {
-    background: #111827;
-    color: white;
+@media (max-width: 1024px) {
+    .filter-menu {
+        width: 120px;
+    }
 }

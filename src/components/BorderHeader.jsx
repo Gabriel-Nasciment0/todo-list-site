@@ -1,8 +1,8 @@
 import { useState } from "react"
 import TaskForm from "./TaskForm"
 import FilterBar from "./FilterBar"
-import "./BorderHeader.css"
 import SortBar from "./SortBar"
+import "./BorderHeader.css"
 
 export default function BoardHeader(props) {
     const [open, setOpen] = useState(false)

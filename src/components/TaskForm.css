@@ -48,7 +48,7 @@
     height: 36px;
     padding: 0 14px;
     background: #111827;
-    color: white;
+    color: black;
     align-self: flex-end;
     border-radius: 8px;
     font-weight: 500;
@@ -57,4 +57,15 @@
 
 .task-form button:hover {
     background: #1f2937;
+}
+
+@media (max-width: 1024px) {
+    .task-form {
+        gap: 10px;
+    }
+    .task-form input,
+    .task-form select {
+        height: 34px;
+        font-size: 13px;
+    }
 }

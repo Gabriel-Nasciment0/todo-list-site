@@ -279,3 +279,12 @@
 .btn.secondary:hover {
     background: #d1d5db;
 }
+
+@media (max-width: 1024px) {
+    .card {
+        padding: 16px 12px;
+    }
+    .card h3 {
+        font-size: 13px;
+    }
+}

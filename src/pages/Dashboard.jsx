@@ -6,7 +6,7 @@ import {
     useSensors,
     closestCorners,
 } from "@dnd-kit/core"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Column from "../components/Column.jsx"
 import TopBar from "../components/TopBar.jsx"
 import BoardHeader from "../components/BorderHeader.jsx"
@@ -16,6 +16,7 @@ import "./Dashboard.css"
 const VALID_STATUS = ["todo", "progress", "done"]
 
 export default function Dashboard({ tasks, setTasks }) {
+    /*Estados Desktop*/
     const [newTask, setNewTask] = useState("")
     const [filter, setFilter] = useState("all")
     const [dueDate, setDueDate] = useState("")
@@ -27,7 +28,11 @@ export default function Dashboard({ tasks, setTasks }) {
             activationConstraint: { distance: 8 },
         }),
     )
+    /*Estados Mobile*/
+    const [activeColumn, setActiveColumn] = useState("todo")
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
+    /* Funções Desktop */
     const handleAddTask = () => {
         const trimmed = newTask.trim()
         if (!trimmed) return
@@ -80,8 +85,18 @@ export default function Dashboard({ tasks, setTasks }) {
             (filter === "pending" && task.status !== "done"),
     )
 
-    const activeTask =
-        tasks.find((task) => task.id === activeTaskId) || null
+    const activeTask = tasks.find((task) => task.id === activeTaskId) || null
+
+    /* Funções Mobile*/
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768)
+        }
+
+        window.addEventListener("resize", handleResize)
+
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
 
     return (
         <div className="container">
@@ -110,32 +125,82 @@ export default function Dashboard({ tasks, setTasks }) {
                     onDragEnd={handleDragEnd}
                     onDragCancel={handleDragCancel}
                 >
+                    {isMobile && (
+                        <div className="mobile-tabs">
+                            <button
+                                className={
+                                    activeColumn === "todo" ? "active" : ""
+                                }
+                                onClick={() => setActiveColumn("todo")}
+                            >
+                                To Do
+                            </button>
+
+                            <button
+                                className={
+                                    activeColumn === "progress" ? "active" : ""
+                                }
+                                onClick={() => setActiveColumn("progress")}
+                            >
+                                Em Progresso
+                            </button>
+
+                            <button
+                                className={
+                                    activeColumn === "done" ? "active" : ""
+                                }
+                                onClick={() => setActiveColumn("done")}
+                            >
+                                Concluído
+                            </button>
+                        </div>
+                    )}
                     <section className="board">
-                        <Column
-                            status="todo"
-                            tasks={filteredTasks}
-                            setTasks={setTasks}
-                            sortType={sortType}
-                            activeTaskId={activeTaskId}
-                        />
-                        <Column
-                            status="progress"
-                            tasks={filteredTasks}
-                            setTasks={setTasks}
-                            sortType={sortType}
-                            activeTaskId={activeTaskId}
-                        />
-                        <Column
-                            status="done"
-                            tasks={filteredTasks}
-                            setTasks={setTasks}
-                            sortType={sortType}
-                            activeTaskId={activeTaskId}
-                        />
+                        {isMobile ? (
+                            <Column
+                                status={activeColumn}
+                                tasks={filteredTasks}
+                                setTasks={setTasks}
+                                sortType={sortType}
+                                activeTaskId={activeTaskId}
+                            />
+                        ) : (
+                            <>
+                                <Column
+                                    status="todo"
+                                    {...{
+                                        tasks: filteredTasks,
+                                        setTasks,
+                                        sortType,
+                                        activeTaskId,
+                                    }}
+                                />
+                                <Column
+                                    status="progress"
+                                    {...{
+                                        tasks: filteredTasks,
+                                        setTasks,
+                                        sortType,
+                                        activeTaskId,
+                                    }}
+                                />
+                                <Column
+                                    status="done"
+                                    {...{
+                                        tasks: filteredTasks,
+                                        setTasks,
+                                        sortType,
+                                        activeTaskId,
+                                    }}
+                                />
+                            </>
+                        )}
                     </section>
 
                     <DragOverlay>
-                        {activeTask ? <TaskCardPreview task={activeTask} /> : null}
+                        {activeTask ? (
+                            <TaskCardPreview task={activeTask} />
+                        ) : null}
                     </DragOverlay>
                 </DndContext>
             </div>
