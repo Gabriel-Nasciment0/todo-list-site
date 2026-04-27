@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react"
 import Column from "../components/Column.jsx"
 import TopBar from "../components/TopBar.jsx"
+
 import BoardHeader from "../components/BorderHeader.jsx"
 import { TaskCardPreview } from "../components/TaskCard.jsx"
 import "./Dashboard.css"
@@ -30,8 +31,8 @@ export default function Dashboard({ tasks, setTasks }) {
     )
     /*Estados Mobile*/
     const [activeColumn, setActiveColumn] = useState("todo")
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
-
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 920)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     /* Funções Desktop */
     const handleAddTask = () => {
         const trimmed = newTask.trim()
@@ -88,10 +89,13 @@ export default function Dashboard({ tasks, setTasks }) {
     const activeTask = tasks.find((task) => task.id === activeTaskId) || null
 
     /* Funções Mobile*/
+
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768)
+            setIsMobile(window.innerWidth <= 920)
         }
+
+        handleResize()
 
         window.addEventListener("resize", handleResize)
 
@@ -100,7 +104,11 @@ export default function Dashboard({ tasks, setTasks }) {
 
     return (
         <div className="container">
-            <TopBar />
+            <TopBar
+                isMobile={isMobile}
+                setFilter={setFilter}
+                setSortType={setSortType}
+            />
 
             <BoardHeader
                 filter={filter}
@@ -114,11 +122,14 @@ export default function Dashboard({ tasks, setTasks }) {
                 sortType={sortType}
                 setSortType={setSortType}
                 onAdd={handleAddTask}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                isMobile={isMobile}
             />
 
             <div className="content">
                 <DndContext
-                    sensors={sensors}
+                    sensors={!isMobile ? sensors : undefined}
                     collisionDetection={closestCorners}
                     autoScroll={false}
                     onDragStart={handleDragStart}
@@ -204,6 +215,13 @@ export default function Dashboard({ tasks, setTasks }) {
                     </DragOverlay>
                 </DndContext>
             </div>
+            {/* ✅ FAB (Mobile) */}
+            <button
+                className="fab"
+                onClick={() => setIsModalOpen(true)}
+            >
+                +
+            </button>
         </div>
     )
 }

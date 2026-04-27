@@ -1,38 +1,40 @@
-import { useState } from "react"
 import TaskForm from "./TaskForm"
 import FilterBar from "./FilterBar"
 import SortBar from "./SortBar"
 import "./BorderHeader.css"
 
-export default function BoardHeader(props) {
-    const [open, setOpen] = useState(false)
-
+export default function BoardHeader({
+    isMobile,
+    isModalOpen,
+    setIsModalOpen,
+    ...props
+}) {
     return (
-        <div className="board-header">
-            <div className="board-left">
-                <button type="button">Mudar tema</button>
+        <>
+            <div className="board-header">
+                {/* Desktop */}
+                {!isMobile && (
+                    <div className="board-right">
+                        <FilterBar {...props} />
+                        <SortBar
+                            sortType={props.sortType}
+                            setSortType={props.setSortType}
+                        />
+
+                        <button
+                            className="primary"
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            + Adicionar tarefa
+                        </button>
+                    </div>
+                )}
             </div>
 
-            <div className="board-right">
-                <FilterBar {...props} />
-
-                <SortBar
-                    sortType={props.sortType}
-                    setSortType={props.setSortType}
-                />
-
-                <button
-                    className="primary"
-                    onClick={() => setOpen(true)}
-                >
-                    + Adicionar tarefa
-                </button>
-            </div>
-
-            {open && (
+            {isModalOpen && (
                 <div
                     className="modal-overlay"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setIsModalOpen(false)}
                 >
                     <div
                         className="modal-content"
@@ -44,19 +46,19 @@ export default function BoardHeader(props) {
                             {...props}
                             onAdd={() => {
                                 props.onAdd()
-                                setOpen(false)
+                                setIsModalOpen(false)
                             }}
                         />
 
                         <button
                             className="close-btn"
-                            onClick={() => setOpen(false)}
+                            onClick={() => setIsModalOpen(false)}
                         >
                             Cancelar
                         </button>
                     </div>
                 </div>
             )}
-        </div>
+        </>
     )
 }

@@ -45,28 +45,15 @@
     }
 
     .board {
-        gap: 15px;
-        padding: 0 15px;
+        gap: 5px;
+        padding: 0 5px;
+        justify-content: space-between;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
     }
 }
 
 /* Mobile */
-@media (max-width: 768px) {
-    .content {
-        padding: 8px;
-    }
-
-    .board {
-        overflow-x: hidden;
-        scroll-snap-type: none;
-        gap: 8px;
-        padding: 0;
-    }
-}
-
-/*Mobile Tabs */
 .mobile-tabs {
     display: flex;
     gap: 8px;
@@ -85,4 +72,87 @@
 .mobile-tabs button.active {
     background: #111827;
     color: white;
+}
+/* FAB */
+
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 56px;
+    height: 56px;
+
+    border-radius: 50%;
+    background: #111827;
+    color: white;
+
+    font-size: 24px;
+    font-weight: 600;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    z-index: 1000;
+
+    transition: all 0.2s ease;
+}
+
+.fab:hover {
+    background: #1f2937;
+}
+
+.fab:active {
+    transform: scale(0.92);
+}
+
+@media (max-width: 920px) {
+    .content {
+        padding: 8px;
+    }
+
+    .board {
+        overflow-x: hidden;
+        scroll-snap-type: none;
+        gap: 8px;
+        padding: 0;
+    }
+    .fab {
+        display: flex;
+    }
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+
+    display: flex;
+}
+
+.menu-content {
+    width: 260px;
+    height: 100%;
+
+    background: white;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }

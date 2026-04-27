@@ -1,3 +1,14 @@
+@keyframes dropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 .topbar {
     height: 64px;
     background: white;
@@ -8,8 +19,7 @@
     align-items: center;
 
     padding: 0 20px;
-
-    flex-shrink: 0; /* importante */
+    flex-shrink: 0;
 }
 
 .topbar-left {
@@ -27,44 +37,105 @@
     font-size: 12px;
     color: #6b7280;
 }
+
 .topbar-right {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-.topbar-right input {
-    background: #f3f4f6;
-    border-radius: 8px;
-    padding: 6px 10px;
-
-    min-width: 180px;
-    transition: all 0.2s ease;
 }
 
-.topbar-right input:focus {
-    background: white;
-    box-shadow: 0 0 0 2px #6366f1;
-}
-.avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+/* =========================
+   HAMBURGER
+========================= */
 
-    background: #111827;
-    color: white;
+.hamburger {
+    width: 36px;
+    height: 36px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 12px;
-    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+
+    font-size: 18px;
+    background: #f3f4f6;
+
+    transition: all 0.15s ease;
 }
+
+.hamburger:hover {
+    background: #e5e7eb;
+}
+
+.hamburger:active {
+    transform: scale(0.96);
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.menu-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 180px;
+    padding: 6px;
+
+    z-index: 50;
+
+    opacity: 0;
+    transform: translateY(-6px) scale(0.96);
+    transform-origin: top right;
+
+    animation: dropdownIn 0.18s ease forwards;
+}
+
+.menu-dropdown button {
+    padding: 8px 10px;
+    border-radius: 6px;
+
+    background: none;
+    border: none;
+
+    text-align: left;
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.menu-dropdown button:hover {
+    background: #f3f4f6;
+}
+
+.menu-dropdown hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 6px 0;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
 
 @media (max-width: 1024px) {
     .topbar {
         padding: 0 12px;
     }
+
     .topbar-left h1 {
         font-size: 14px;
     }
