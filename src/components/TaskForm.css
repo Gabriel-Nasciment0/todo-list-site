@@ -59,7 +59,7 @@
     background: #6b7280;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1000px) {
     .task-form {
         gap: 10px;
     }

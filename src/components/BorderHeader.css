@@ -155,7 +155,7 @@
     background: #d1d5db;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1000px) {
     .board-header {
         flex-direction: column;
         align-items: stretch;
