@@ -20,25 +20,30 @@ export default function TaskForm({
             className="task-form"
         >
             <div className="form-group">
-                <label htmlFor="title">Título</label>
+                <label htmlFor="task-title">Título</label>
                 <input
+                    id="task-title"
                     type="text"
                     placeholder="Nova tarefa"
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
                 />
             </div>
+
             <div className="form-group">
                 <label htmlFor="dueDate">Prazo</label>
                 <input
+                    id="dueDate"
                     type="date"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="priority">Prioridade</label>
+                <label htmlFor="task-priority">Prioridade</label>
                 <select
+                    id="task-priority"
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
                 >

@@ -1,5 +1,5 @@
-import TaskCard from "./TaskCard"
 import { useDroppable } from "@dnd-kit/core"
+import TaskCard from "./TaskCard"
 import "./Column.css"
 
 const priorityOrder = { high: 0, medium: 1, low: 2 }

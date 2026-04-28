@@ -9,7 +9,6 @@ import {
 import { useEffect, useState } from "react"
 import Column from "../components/Column.jsx"
 import TopBar from "../components/TopBar.jsx"
-
 import BoardHeader from "../components/BorderHeader.jsx"
 import { TaskCardPreview } from "../components/TaskCard.jsx"
 import "./Dashboard.css"
@@ -17,7 +16,7 @@ import "./Dashboard.css"
 const VALID_STATUS = ["todo", "progress", "done"]
 
 export default function Dashboard({ tasks, setTasks }) {
-    /*Estados Desktop*/
+    /* Estados Desktop */
     const [newTask, setNewTask] = useState("")
     const [filter, setFilter] = useState("all")
     const [dueDate, setDueDate] = useState("")
@@ -29,11 +28,13 @@ export default function Dashboard({ tasks, setTasks }) {
             activationConstraint: { distance: 8 },
         }),
     )
-    /*Estados Mobile*/
+
+    /* Estados Mobile */
     const [activeColumn, setActiveColumn] = useState("todo")
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 920)
+    const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 920)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    /* Funções Desktop */
+
+    /* Funcoes Desktop */
     const handleAddTask = () => {
         const trimmed = newTask.trim()
         if (!trimmed) return
@@ -88,8 +89,7 @@ export default function Dashboard({ tasks, setTasks }) {
 
     const activeTask = tasks.find((task) => task.id === activeTaskId) || null
 
-    /* Funções Mobile*/
-
+    /* Funcoes Mobile */
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 920)
@@ -166,6 +166,7 @@ export default function Dashboard({ tasks, setTasks }) {
                             </button>
                         </div>
                     )}
+
                     <section className="board">
                         {isMobile ? (
                             <Column
@@ -215,10 +216,11 @@ export default function Dashboard({ tasks, setTasks }) {
                     </DragOverlay>
                 </DndContext>
             </div>
-            {/* ✅ FAB (Mobile) */}
+
             <button
                 className="fab"
                 onClick={() => setIsModalOpen(true)}
+                aria-label="Adicionar tarefa"
             >
                 +
             </button>

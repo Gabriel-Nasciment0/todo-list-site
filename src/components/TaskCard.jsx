@@ -26,10 +26,6 @@ function getDateStatus(dueDate) {
     return "normal"
 }
 
-/* =========================
-   CONTENT
-========================= */
-
 function TaskCardContent({
     task,
     onEdit,
@@ -57,11 +53,11 @@ function TaskCardContent({
                 {task.priority === "low" && "Baixa"}
             </div>
 
-            {/* STATUS + CONTROLES */}
             <div className="card-actions">
                 <button
                     onClick={onPrevStatus}
                     disabled={task.status === "todo"}
+                    aria-label="Mover para a coluna anterior"
                 >
                     ←
                 </button>
@@ -75,12 +71,12 @@ function TaskCardContent({
                 <button
                     onClick={onNextStatus}
                     disabled={task.status === "done"}
+                    aria-label="Mover para a próxima coluna"
                 >
                     →
                 </button>
             </div>
 
-            {/* AÇÕES SIMPLES */}
             <div className="card-actions">
                 <button onClick={onEdit}>Editar</button>
                 <button className="danger" onClick={onDelete}>
@@ -91,10 +87,6 @@ function TaskCardContent({
     )
 }
 
-/* =========================
-   PREVIEW (DRAG)
-========================= */
-
 export function TaskCardPreview({ task }) {
     return (
         <div className="card drag-overlay">
@@ -103,10 +95,6 @@ export function TaskCardPreview({ task }) {
         </div>
     )
 }
-
-/* =========================
-   MAIN COMPONENT
-========================= */
 
 export default function TaskCard({ task, setTasks, isActiveDrag = false }) {
     const [isEditing, setIsEditing] = useState(false)
@@ -118,10 +106,6 @@ export default function TaskCard({ task, setTasks, isActiveDrag = false }) {
         id: task.id,
         disabled: isEditing,
     })
-
-    /* =========================
-       STATUS CONTROLES
-    ========================= */
 
     const handleNextStatus = () => {
         const nextStatusMap = {
@@ -156,10 +140,6 @@ export default function TaskCard({ task, setTasks, isActiveDrag = false }) {
             ),
         )
     }
-
-    /* =========================
-       EDIT / DELETE
-    ========================= */
 
     const handleDelete = () => {
         setTasks((prev) => prev.filter((t) => t.id !== task.id))

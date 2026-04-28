@@ -1,7 +1,8 @@
-/*Desktop*/
+/* Desktop */
 .container {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
     min-height: 100dvh;
 }
 
@@ -12,6 +13,7 @@
     flex-direction: column;
     max-width: 1920px;
     width: 100%;
+    min-width: 0;
     padding: 16px;
 
     margin: 0 auto;
@@ -25,6 +27,7 @@
     display: flex;
     flex: 1;
     min-height: 0;
+    min-width: 0;
 
     overflow-x: auto;
     overflow-y: hidden;
@@ -35,6 +38,7 @@
     padding: 5px 0;
 
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Tablet */
@@ -59,10 +63,13 @@
     gap: 8px;
     padding: 8px;
     border-bottom: 1px solid #e5e7eb;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .mobile-tabs button {
     flex: 1;
+    min-width: 100px;
     padding: 8px;
     min-height: 40px;
     border-radius: 8px;
@@ -73,12 +80,14 @@
     background: #111827;
     color: white;
 }
-/* FAB */
 
+/* FAB */
 .fab {
     position: fixed;
     bottom: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     right: 20px;
+    right: calc(20px + env(safe-area-inset-right, 0px));
 
     width: 56px;
     height: 56px;
@@ -120,6 +129,11 @@
         gap: 8px;
         padding: 0;
     }
+
+    .mobile-tabs button {
+        flex: 0 0 auto;
+    }
+
     .fab {
         display: flex;
     }
@@ -152,7 +166,26 @@
     from {
         transform: translateX(-100%);
     }
+
     to {
         transform: translateX(0);
+    }
+}
+
+@supports not (min-height: 100dvh) {
+    .container {
+        min-height: 100vh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .board {
+        scroll-behavior: auto;
+    }
+
+    .fab,
+    .menu-content {
+        transition: none;
+        animation: none;
     }
 }

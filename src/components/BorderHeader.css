@@ -1,11 +1,12 @@
 /* =========================
-   ANIMAÇÕES
+   ANIMACOES
 ========================= */
 
 @keyframes fadeIn {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -16,6 +17,7 @@
         opacity: 0;
         transform: scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -43,7 +45,7 @@
     align-items: center;
 }
 
-/* BOTÕES */
+/* BOTOES */
 
 .board-header button {
     background: transparent;
@@ -123,6 +125,8 @@
 
     width: 100%;
     max-width: 360px;
+    max-height: min(90vh, 720px);
+    overflow-y: auto;
 
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 
@@ -161,18 +165,22 @@
         align-items: stretch;
         gap: 10px;
     }
+
     .board-header button {
         font-size: 12px;
         padding: 6px 10px;
     }
+
     .board-left {
         width: 100%;
     }
+
     .board-right {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
     }
+
     .board-right > * {
         flex-shrink: 0;
     }
@@ -181,5 +189,25 @@
 @media (max-width: 920px) {
     .board-header {
         display: none;
+    }
+}
+
+@media (max-width: 560px) {
+    .modal-overlay {
+        align-items: flex-end;
+    }
+
+    .modal-content {
+        max-width: 100%;
+        border-radius: 16px 16px 0 0;
+        padding: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-overlay,
+    .modal-content,
+    .task-dropdown {
+        animation: none;
     }
 }

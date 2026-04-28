@@ -23,6 +23,7 @@
 
 .task-form input,
 .task-form select {
+    width: 100%;
     background: #f3f4f6;
     padding: 0 10px;
     border-radius: 8px;
@@ -63,9 +64,27 @@
     .task-form {
         gap: 10px;
     }
+
     .task-form input,
     .task-form select {
         height: 34px;
         font-size: 13px;
+    }
+}
+
+@media (max-width: 560px) {
+    .task-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .task-form .form-group,
+    .task-form .form-group:first-child,
+    .task-form button {
+        width: 100%;
+    }
+
+    .task-form button {
+        align-self: stretch;
     }
 }
