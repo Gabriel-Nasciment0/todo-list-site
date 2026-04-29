@@ -1,6 +1,5 @@
 import TaskForm from "./TaskForm"
-import FilterBar from "./FilterBar"
-import SortBar from "./SortBar"
+import FilterMenu from "./FilterMenu"
 import "./BorderHeader.css"
 
 export default function BoardHeader({
@@ -15,8 +14,9 @@ export default function BoardHeader({
                 {/* Desktop */}
                 {!isMobile && (
                     <div className="board-right">
-                        <FilterBar {...props} />
-                        <SortBar
+                        <FilterMenu
+                            filter={props.filter}
+                            setFilter={props.setFilter}
                             sortType={props.sortType}
                             setSortType={props.setSortType}
                         />

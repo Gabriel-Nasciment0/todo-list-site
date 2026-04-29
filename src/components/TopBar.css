@@ -157,7 +157,7 @@
     flex-direction: column;
     padding: 8px;
 
-    z-index: 50;
+    z-index: 1000;
 
     opacity: 0;
     transform: translateY(-6px) scale(0.96);

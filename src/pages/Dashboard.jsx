@@ -97,7 +97,8 @@ export default function Dashboard({ tasks, setTasks, darkMode, setDarkMode }) {
         return filteredTasks.filter(
             (task) =>
                 task.title.toLowerCase().includes(query) ||
-                (task.description && task.description.toLowerCase().includes(query)),
+                (task.description &&
+                    task.description.toLowerCase().includes(query)),
         )
     }, [searchQuery, filteredTasks])
 
@@ -120,7 +121,9 @@ export default function Dashboard({ tasks, setTasks, darkMode, setDarkMode }) {
         <div className="container">
             <TopBar
                 isMobile={isMobile}
+                filter={filter}
                 setFilter={setFilter}
+                sortType={sortType}
                 setSortType={setSortType}
                 darkMode={darkMode}
                 setDarkMode={setDarkMode}
