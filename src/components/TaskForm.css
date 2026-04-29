@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     min-width: 140px;
-    gap: 4px;
+    gap: 6px;
 }
 
 .task-form .form-group:first-child {
@@ -18,46 +18,51 @@
 
 .task-form label {
     font-size: 12px;
-    color: #6b7280;
+    font-weight: 600;
+    color: var(--text-muted);
 }
 
 .task-form input,
 .task-form select {
     width: 100%;
-    background: #f3f4f6;
-    padding: 0 10px;
-    border-radius: 8px;
-    border: 1px solid transparent;
+    background: var(--surface-muted);
+    color: var(--text);
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
     font-size: 14px;
-    height: 36px;
-    transition: all 0.15s ease;
+    height: 38px;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .task-form input:focus,
 .task-form select:focus {
-    background: white;
-    border-color: #6366f1;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    background: var(--surface-elevated);
+    border-color: var(--accent);
+    outline: none;
 }
 
 .task-form input:hover,
 .task-form select:hover {
-    background: #e5e7eb;
+    background: var(--surface-hover);
 }
 
 .task-form button {
-    height: 36px;
-    padding: 0 14px;
-    background: #1f2937;
-    color: #fff;
+    height: 38px;
+    padding: 0 16px;
+    background: var(--accent);
+    color: var(--accent-contrast);
     align-self: flex-end;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.15s ease;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
 }
 
-.task-form button:hover {
-    background: #6b7280;
+.task-form button:hover:not(:disabled) {
+    background: var(--accent-hover);
 }
 
 @media (max-width: 1000px) {
@@ -67,7 +72,7 @@
 
     .task-form input,
     .task-form select {
-        height: 34px;
+        height: 36px;
         font-size: 13px;
     }
 }

@@ -12,7 +12,7 @@ export default function Column({
     activeTaskId,
 }) {
     const statusMap = {
-        todo: "To Do",
+        todo: "A Fazer",
         progress: "Em Progresso",
         done: "Concluído",
     }

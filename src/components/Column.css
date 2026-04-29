@@ -1,7 +1,3 @@
-/* =========================
-   COLUMN BASE
-========================= */
-
 .column {
     display: flex;
     flex-direction: column;
@@ -9,52 +5,87 @@
     flex: 1;
     min-width: 0;
 
-    background: #f9fafb;
-    border-radius: 12px;
-    padding: 12px;
-    border: 1px solid #e5e7eb;
+    background: var(--surface);
+    border-radius: 18px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
 }
 
 .column:hover {
-    background: #f3f4f6;
+    background: var(--surface-elevated);
+    border-color: var(--border-strong);
 }
 
 .column.is-over {
-    background: #eef2ff;
-    border-color: #818cf8;
-    box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.25);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    box-shadow:
+        var(--shadow-md),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04);
     transform: translateY(-2px);
 }
-
-/* =========================
-   HEADER
-========================= */
 
 .column-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    font-weight: 600;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.column-header h2 {
     font-size: 14px;
-    color: #374151;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
 }
 
 .column-header span {
     font-size: 12px;
-    background: #e5e7eb;
-    padding: 2px 6px;
-    border-radius: 6px;
+    font-weight: 700;
+    min-width: 28px;
+    text-align: center;
+    padding: 3px 8px;
+    border-radius: 999px;
+    color: var(--text-muted);
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
 }
 
-/* =========================
-   CONTENT
-========================= */
+.column.todo .column-header h2 {
+    color: var(--status-todo);
+}
+
+.column.progress .column-header h2 {
+    color: var(--status-progress);
+}
+
+.column.done .column-header h2 {
+    color: var(--status-done);
+}
+
+.column.todo .column-header span {
+    color: var(--status-todo);
+}
+
+.column.progress .column-header span {
+    color: var(--status-progress);
+}
+
+.column.done .column-header span {
+    color: var(--status-done);
+}
 
 .column-content {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     flex: 1;
     overflow-y: auto;
     padding-right: 4px;
@@ -66,19 +97,15 @@
 }
 
 .column-content::-webkit-scrollbar-thumb {
-    background: #d1d5db;
+    background: var(--scrollbar);
     border-radius: 10px;
 }
 
-/* =========================
-   EMPTY STATE
-========================= */
-
 .empty {
     font-size: 13px;
-    color: #9ca3af;
+    color: var(--text-soft);
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 @media (max-width: 1000px) {

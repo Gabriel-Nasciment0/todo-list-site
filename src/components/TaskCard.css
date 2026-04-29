@@ -1,7 +1,3 @@
-/* =========================
-   ANIMACOES
-========================= */
-
 @keyframes fadeSlide {
     from {
         opacity: 0;
@@ -14,36 +10,34 @@
     }
 }
 
-/* =========================
-   CARD BASE
-========================= */
-
 .card {
     display: flex;
     flex-direction: column;
     min-height: 160px;
     min-width: 0;
-    background: white;
-    border-radius: 12px;
+    background: var(--card);
+    color: var(--text);
+    border-radius: 16px;
     padding: 18px 14px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
     animation: fadeSlide 0.25s ease;
     transition:
         transform 0.15s ease,
         box-shadow 0.2s ease,
         border-color 0.2s ease,
+        background-color 0.2s ease,
         opacity 0.2s ease;
-    will-change: transform;
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-    border-color: #d1d5db;
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
 }
 
 .card.drag-placeholder {
-    opacity: 0.2;
+    opacity: 0.24;
     border-style: dashed;
     box-shadow: none;
 }
@@ -53,14 +47,10 @@
     max-width: min(280px, calc(100vw - 24px));
     opacity: 0.98;
     transform: rotate(2deg);
-    box-shadow: 0 18px 45px rgba(17, 24, 39, 0.24);
-    border-color: #c7d2fe;
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
     pointer-events: none;
 }
-
-/* =========================
-   HEADER
-========================= */
 
 .card-header {
     display: flex;
@@ -72,14 +62,13 @@
 
 .card h3 {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 6px;
     min-height: 20px;
-    line-height: 1.3;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
     overflow-wrap: anywhere;
 }
-
-/* HANDLE */
 
 .drag-handle {
     display: inline-flex;
@@ -87,7 +76,7 @@
     justify-content: center;
     width: 28px;
     margin-bottom: 8px;
-    color: #9ca3af;
+    color: var(--text-soft);
     cursor: grab;
     user-select: none;
     touch-action: none;
@@ -99,95 +88,108 @@
     cursor: grabbing;
 }
 
-/* =========================
-   CONTENT
-========================= */
-
 .due-date {
     font-size: 12px;
+    font-weight: 600;
     text-align: center;
-    width: 85px;
-    padding: 3px 6px;
-    border-radius: 6px;
+    width: 92px;
+    padding: 4px 8px;
+    border-radius: 999px;
     display: inline-block;
+    border: 1px solid transparent;
 }
 
 .due-date.late {
-    background: #fee2e2;
-    color: #dc2626;
+    background: var(--danger-soft);
+    color: var(--danger);
 }
 
 .due-date.soon {
-    background: #fef3c7;
-    color: #d97706;
+    background: var(--warning-soft);
+    color: var(--warning);
 }
 
 .due-date.normal {
-    background: #e5e7eb;
-    color: #374151;
+    background: var(--surface-muted);
+    color: var(--text-muted);
+    border-color: var(--border);
 }
 
 .priority {
-    margin: 10px 0;
-    font-size: 13px;
-    font-weight: bolder;
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    margin: 12px 0 8px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
 }
 
 .priority.high {
-    color: #dc2626;
+    color: var(--danger);
+    background: var(--danger-soft);
 }
 
 .priority.medium {
-    color: #d97706;
+    color: var(--warning);
+    background: var(--warning-soft);
 }
 
 .priority.low {
-    color: #059669;
+    color: var(--success);
+    background: var(--success-soft);
 }
-
-/* =========================
-   ACTION BUTTONS
-========================= */
 
 .card-actions {
     display: flex;
     justify-content: space-between;
     gap: 8px;
-    margin: 10px 0;
+    margin-top: 10px;
 }
 
-.card-actions button {
-    min-height: 36px;
+.status-controls {
+    align-items: center;
 }
 
-.status-btn {
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.icon-btn:hover:not(:disabled) {
+    background: var(--surface-hover);
+    border-color: var(--border-strong);
+}
+
+.icon-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.status-label {
     flex: 1;
-    padding: 6px 8px;
-    border-radius: 8px;
-    border: none;
+    min-width: 0;
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--surface-muted);
+    color: var(--text-muted);
     font-size: 12px;
-    cursor: pointer;
-    background: #f3f4f6;
-    transition: all 0.15s ease;
+    font-weight: 700;
+    border: 1px solid var(--border);
 }
 
-.status-btn:hover:not(:disabled) {
-    background: #e5e7eb;
-    transform: translateY(-1px);
+.card-footer .btn {
+    flex: 1;
 }
-
-.status-btn:active:not(:disabled) {
-    transform: scale(0.97);
-}
-
-.status-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-/* =========================
-   EDIT MODE
-========================= */
 
 .card-edit {
     display: flex;
@@ -199,22 +201,28 @@
 }
 
 .edit-input,
-.edit-select {
+.edit-row input,
+.edit-row select {
     width: 100%;
     padding: 10px 10px;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    color: var(--text);
     font-size: 13px;
-    min-height: 20px;
-    transition: all 0.15s ease;
+    min-height: 38px;
+    transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 .edit-input:focus,
-.edit-select:focus {
+.edit-row input:focus,
+.edit-row select:focus {
     outline: none;
-    border-color: #6366f1;
-    background: white;
+    border-color: var(--accent);
+    background: var(--surface-elevated);
 }
 
 .edit-row {
@@ -225,7 +233,6 @@
 .edit-row input {
     flex: 1;
     min-width: 0;
-    padding: 5px 10px;
 }
 
 .edit-row select {
@@ -235,39 +242,55 @@
 .edit-actions {
     display: flex;
     justify-content: flex-end;
-    padding-top: 15px;
+    padding-top: 10px;
     gap: 10px;
 }
 
 .btn {
-    padding: 6px 10px;
-    border-radius: 8px;
+    min-height: 38px;
+    padding: 0 12px;
+    border-radius: 10px;
     font-size: 12px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.15s ease;
+    font-weight: 700;
+    border: 1px solid transparent;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
 }
 
 .btn.primary {
-    background: #111827;
-    color: white;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn.primary:hover {
-    opacity: 0.9;
+    background: var(--accent-hover);
 }
 
 .btn.secondary {
-    background: #e5e7eb;
+    background: var(--surface-muted);
+    color: var(--text);
+    border-color: var(--border);
 }
 
 .btn.secondary:hover {
-    background: #d1d5db;
+    background: var(--surface-hover);
+    border-color: var(--border-strong);
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
+.btn.danger {
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-color: transparent;
+}
+
+.btn.danger:hover {
+    background: var(--danger);
+    color: var(--accent-contrast);
+}
 
 @media (max-width: 1000px) {
     .card {

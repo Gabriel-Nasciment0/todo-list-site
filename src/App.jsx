@@ -25,6 +25,11 @@ export default function App() {
         }
     })
 
+    const [darkMode, setDarkMode] = useState(() => {
+        const saved = localStorage.getItem("theme")
+        return saved === "dark"
+    })
+
     useEffect(() => {
         try {
             localStorage.setItem("tasks", JSON.stringify(tasks))
@@ -33,10 +38,19 @@ export default function App() {
         }
     }, [tasks])
 
+    useEffect(() => {
+        localStorage.setItem("theme", darkMode ? "dark" : "light")
+    }, [darkMode])
+
+    useEffect(() => {
+        document.body.classList.toggle("dark", darkMode)
+    }, [darkMode])
     return (
         <Dashboard
             tasks={tasks}
             setTasks={setTasks}
+            darkMode={darkMode}
+            setDarkMode={setDarkMode}
         />
     )
 }

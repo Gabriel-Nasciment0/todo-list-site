@@ -11,14 +11,16 @@
 }
 
 .topbar {
-    min-height: 64px;
-    height: 64px;
-    background: white;
-    border-bottom: 1px solid #e5e7eb;
+    min-height: 68px;
+    height: 68px;
+    background: var(--surface-elevated);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
 
     padding: 0 20px;
     flex-shrink: 0;
@@ -32,110 +34,155 @@
 
 .topbar-left h1 {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.2;
+    letter-spacing: -0.01em;
     word-break: break-word;
 }
 
 .topbar-left span {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .topbar-right {
     position: relative;
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-/* =========================
-   HAMBURGER
-========================= */
+.topbar-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 320px;
+}
+
+.search-input {
+    width: 100%;
+    height: 38px;
+    padding: 0 36px 0 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-alpha);
+}
+
+.search-clear {
+    position: absolute;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-clear:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+}
+
+.theme-toggle,
+.hamburger {
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-muted);
+    color: var(--text);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.theme-toggle {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.theme-toggle:hover,
+.hamburger:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-strong);
+}
+
+.theme-toggle:active,
+.hamburger:active {
+    transform: translateY(1px);
+}
 
 .hamburger {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    padding: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-
-    font-size: 18px;
-    background: #f3f4f6;
-
-    transition: all 0.15s ease;
+    font-size: 17px;
 }
-
-.hamburger:hover {
-    background: #e5e7eb;
-}
-
-.hamburger:active {
-    transform: scale(0.96);
-}
-
-/* =========================
-   DROPDOWN
-========================= */
 
 .menu-dropdown {
     position: absolute;
-    top: 110%;
+    top: calc(100% + 10px);
     right: 0;
     width: min(220px, calc(100vw - 24px));
+    min-width: 180px;
 
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-md);
 
     display: flex;
     flex-direction: column;
-
-    min-width: 180px;
-    padding: 6px;
+    padding: 8px;
 
     z-index: 50;
 
     opacity: 0;
     transform: translateY(-6px) scale(0.96);
     transform-origin: top right;
-
     animation: dropdownIn 0.18s ease forwards;
 }
 
 .menu-dropdown button {
-    padding: 8px 10px;
-    border-radius: 6px;
-
-    background: none;
-    border: none;
-
+    padding: 9px 10px;
+    border-radius: 10px;
     text-align: left;
-    cursor: pointer;
-
     font-size: 13px;
     white-space: normal;
+    color: var(--text);
 }
 
 .menu-dropdown button:hover {
-    background: #f3f4f6;
+    background: var(--surface-muted);
 }
 
 .menu-dropdown hr {
     border: none;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--border);
     margin: 6px 0;
 }
-
-/* =========================
-   RESPONSIVO
-========================= */
 
 @media (max-width: 1000px) {
     .topbar {
@@ -154,6 +201,7 @@
         transform: none;
     }
 
+    .theme-toggle,
     .hamburger {
         transition: none;
     }

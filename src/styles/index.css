@@ -12,12 +12,17 @@ html {
 body {
     min-height: 100%;
     font-family: Inter, system-ui, sans-serif;
-    background: linear-gradient(135deg, #e9edf5, #f8fafc);
-    color: #111827;
+    color: var(--text);
     line-height: 1.5;
+    background-color: var(--bg);
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
 
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
 
 button {
@@ -25,7 +30,18 @@ button {
     border: none;
     background: none;
     text-align: center;
-    transition: all 0.15s ease;
+    color: inherit;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 button,
@@ -35,10 +51,25 @@ textarea {
     font: inherit;
 }
 
+input,
+select,
+textarea {
+    color: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-soft);
+}
+
 img,
 svg {
     display: block;
     max-width: 100%;
+}
+
+a {
+    color: inherit;
 }
 
 #root {
@@ -46,12 +77,36 @@ svg {
     min-height: 100dvh;
 }
 
+::selection {
+    background: var(--accent-soft-strong);
+    color: var(--text);
+}
+
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-    outline: 2px solid #6366f1;
-    outline-offset: 2px;
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+    border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
 }
 
 @supports not (min-height: 100dvh) {

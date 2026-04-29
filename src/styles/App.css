@@ -1,21 +1,125 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    color-scheme: light;
+
+    --bg: #f4f7fb;
+    --bg-gradient:
+        radial-gradient(
+            1200px circle at top left,
+            rgba(95, 111, 242, 0.12),
+            transparent 46%
+        ),
+        radial-gradient(
+            900px circle at top right,
+            rgba(14, 165, 233, 0.08),
+            transparent 38%
+        );
+
+    --surface: rgba(250, 252, 255, 0.92);
+    --surface-elevated: #fbfdff;
+    --surface-muted: #eef2f7;
+    --surface-hover: #e7edf5;
+    --surface-active: #dde6f1;
+
+    --card: #fbfdff;
+    --text: #19212e;
+    --text-muted: #5f6b7c;
+    --text-soft: #7f8998;
+
+    --border: #d9e0ea;
+    --border-strong: #c3ccd8;
+
+    --accent: #5f6ff2;
+    --accent-hover: #5160da;
+    --accent-soft: #e5e9ff;
+    --accent-soft-strong: #d6ddff;
+    --accent-contrast: #f8faff;
+
+    --shadow-sm: 0 10px 24px rgba(36, 50, 77, 0.08);
+    --shadow-md: 0 18px 40px rgba(24, 36, 58, 0.12);
+    --shadow-lg: 0 28px 60px rgba(19, 29, 46, 0.16);
+
+    --overlay: rgba(15, 23, 42, 0.46);
+    --focus-ring: rgba(95, 111, 242, 0.24);
+
+    --danger: #c95c5c;
+    --danger-hover: #b44f4f;
+    --danger-soft: #fce8e8;
+
+    --warning: #b7791f;
+    --warning-soft: #fff1d8;
+
+    --success: #0f8a65;
+    --success-soft: #dff6ed;
+
+    --status-todo: #708095;
+    --status-progress: #5f6ff2;
+    --status-done: #0f8a65;
+
+    --scrollbar: #c6d1df;
+    --scrollbar-track: transparent;
+
+    --secondary: var(--surface-muted);
 }
 
-body {
-    font-family: Inter, system-ui, sans-serif;
-    background: linear-gradient(135deg, #e9edf5, #f8fafc);
-    color: #111827;
+.dark {
+    color-scheme: dark;
 
-    -webkit-font-smoothing: antialiased;
-}
+    --bg: #101722;
+    --bg-gradient:
+        radial-gradient(
+            1100px circle at top left,
+            rgba(139, 152, 255, 0.14),
+            transparent 42%
+        ),
+        radial-gradient(
+            900px circle at top right,
+            rgba(56, 189, 248, 0.1),
+            transparent 34%
+        );
 
-button {
-    cursor: pointer;
-    border: none;
-    background: none;
-    text-align: center;
-    transition: all 0.15s ease;
+    --surface: rgba(20, 29, 42, 0.9);
+    --surface-elevated: #182131;
+    --surface-muted: #202c3e;
+    --surface-hover: #263347;
+    --surface-active: #2d3b51;
+
+    --card: #1a2434;
+    --text: #e8edf7;
+    --text-muted: #a7b3c6;
+    --text-soft: #7f8ca3;
+
+    --border: #2a3a4f;
+    --border-strong: #38506b;
+
+    --accent: #8b98ff;
+    --accent-hover: #9da8ff;
+    --accent-soft: rgba(139, 152, 255, 0.18);
+    --accent-soft-strong: rgba(139, 152, 255, 0.28);
+    --accent-contrast: #0f1521;
+
+    --shadow-sm: 0 12px 28px rgba(2, 6, 23, 0.28);
+    --shadow-md: 0 20px 44px rgba(2, 6, 23, 0.34);
+    --shadow-lg: 0 30px 72px rgba(2, 6, 23, 0.4);
+
+    --overlay: rgba(2, 6, 23, 0.62);
+    --focus-ring: rgba(139, 152, 255, 0.28);
+
+    --danger: #ff9a9a;
+    --danger-hover: #ffb0b0;
+    --danger-soft: rgba(255, 138, 138, 0.16);
+
+    --warning: #f2bf6c;
+    --warning-soft: rgba(242, 191, 108, 0.18);
+
+    --success: #4fc49c;
+    --success-soft: rgba(79, 196, 156, 0.18);
+
+    --status-todo: #9aabc1;
+    --status-progress: #9aa5ff;
+    --status-done: #57caa3;
+
+    --scrollbar: #3a4b62;
+    --scrollbar-track: transparent;
+
+    --secondary: var(--surface-muted);
 }

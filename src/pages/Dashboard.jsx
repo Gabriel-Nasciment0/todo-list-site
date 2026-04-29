@@ -6,7 +6,7 @@ import {
     useSensors,
     closestCorners,
 } from "@dnd-kit/core"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import Column from "../components/Column.jsx"
 import TopBar from "../components/TopBar.jsx"
 import BoardHeader from "../components/BorderHeader.jsx"
@@ -15,7 +15,7 @@ import "./Dashboard.css"
 
 const VALID_STATUS = ["todo", "progress", "done"]
 
-export default function Dashboard({ tasks, setTasks }) {
+export default function Dashboard({ tasks, setTasks, darkMode, setDarkMode }) {
     /* Estados Desktop */
     const [newTask, setNewTask] = useState("")
     const [filter, setFilter] = useState("all")
@@ -23,6 +23,7 @@ export default function Dashboard({ tasks, setTasks }) {
     const [priority, setPriority] = useState("medium")
     const [sortType, setSortType] = useState("priority")
     const [activeTaskId, setActiveTaskId] = useState(null)
+    const [searchQuery, setSearchQuery] = useState("")
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: { distance: 8 },
@@ -87,6 +88,19 @@ export default function Dashboard({ tasks, setTasks }) {
             (filter === "pending" && task.status !== "done"),
     )
 
+    // Busca: filtra por título (case-insensitive)
+    // useMemo evita re-renders desnecessários
+    const searchedTasks = useMemo(() => {
+        if (!searchQuery.trim()) return filteredTasks
+
+        const query = searchQuery.toLowerCase().trim()
+        return filteredTasks.filter(
+            (task) =>
+                task.title.toLowerCase().includes(query) ||
+                (task.description && task.description.toLowerCase().includes(query)),
+        )
+    }, [searchQuery, filteredTasks])
+
     const activeTask = tasks.find((task) => task.id === activeTaskId) || null
 
     /* Funcoes Mobile */
@@ -108,6 +122,10 @@ export default function Dashboard({ tasks, setTasks }) {
                 isMobile={isMobile}
                 setFilter={setFilter}
                 setSortType={setSortType}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
             />
 
             <BoardHeader
@@ -144,7 +162,7 @@ export default function Dashboard({ tasks, setTasks }) {
                                 }
                                 onClick={() => setActiveColumn("todo")}
                             >
-                                To Do
+                                A Fazer
                             </button>
 
                             <button
@@ -171,7 +189,7 @@ export default function Dashboard({ tasks, setTasks }) {
                         {isMobile ? (
                             <Column
                                 status={activeColumn}
-                                tasks={filteredTasks}
+                                tasks={searchedTasks}
                                 setTasks={setTasks}
                                 sortType={sortType}
                                 activeTaskId={activeTaskId}
@@ -181,7 +199,7 @@ export default function Dashboard({ tasks, setTasks }) {
                                 <Column
                                     status="todo"
                                     {...{
-                                        tasks: filteredTasks,
+                                        tasks: searchedTasks,
                                         setTasks,
                                         sortType,
                                         activeTaskId,
@@ -190,7 +208,7 @@ export default function Dashboard({ tasks, setTasks }) {
                                 <Column
                                     status="progress"
                                     {...{
-                                        tasks: filteredTasks,
+                                        tasks: searchedTasks,
                                         setTasks,
                                         sortType,
                                         activeTaskId,
@@ -199,7 +217,7 @@ export default function Dashboard({ tasks, setTasks }) {
                                 <Column
                                     status="done"
                                     {...{
-                                        tasks: filteredTasks,
+                                        tasks: searchedTasks,
                                         setTasks,
                                         sortType,
                                         activeTaskId,

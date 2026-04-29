@@ -1,7 +1,15 @@
 import { useState, useRef, useEffect } from "react"
 import "./TopBar.css"
 
-export default function TopBar({ isMobile, setFilter, setSortType }) {
+export default function TopBar({
+    isMobile,
+    setFilter,
+    setSortType,
+    darkMode,
+    setDarkMode,
+    searchQuery,
+    setSearchQuery,
+}) {
     const [open, setOpen] = useState(false)
     const ref = useRef()
 
@@ -22,6 +30,34 @@ export default function TopBar({ isMobile, setFilter, setSortType }) {
             <div className="topbar-left">
                 <h1>Bem-vindo de volta</h1>
                 <span>Seu workspace</span>
+            </div>
+
+            <div className="topbar-search">
+                <input
+                    type="text"
+                    placeholder="Buscar tarefas..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-input"
+                />
+                {searchQuery && (
+                    <button
+                        className="search-clear"
+                        onClick={() => setSearchQuery("")}
+                        aria-label="Limpar busca"
+                    >
+                        ×
+                    </button>
+                )}
+            </div>
+
+            <div className="topbar-right">
+                <button
+                    className="theme-toggle"
+                    onClick={() => setDarkMode((prev) => !prev)}
+                >
+                    {darkMode ? "Escuro" : "Claro"}
+                </button>
             </div>
 
             {isMobile && (

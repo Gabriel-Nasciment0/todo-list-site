@@ -53,8 +53,9 @@ function TaskCardContent({
                 {task.priority === "low" && "Baixa"}
             </div>
 
-            <div className="card-actions">
+            <div className="card-actions status-controls">
                 <button
+                    className="icon-btn"
                     onClick={onPrevStatus}
                     disabled={task.status === "todo"}
                     aria-label="Mover para a coluna anterior"
@@ -63,12 +64,13 @@ function TaskCardContent({
                 </button>
 
                 <span className="status-label">
-                    {task.status === "todo" && "To Do"}
+                    {task.status === "todo" && "A Fazer"}
                     {task.status === "progress" && "Em Progresso"}
                     {task.status === "done" && "Concluído"}
                 </span>
 
                 <button
+                    className="icon-btn"
                     onClick={onNextStatus}
                     disabled={task.status === "done"}
                     aria-label="Mover para a próxima coluna"
@@ -77,9 +79,11 @@ function TaskCardContent({
                 </button>
             </div>
 
-            <div className="card-actions">
-                <button onClick={onEdit}>Editar</button>
-                <button className="danger" onClick={onDelete}>
+            <div className="card-actions card-footer">
+                <button className="btn secondary" onClick={onEdit}>
+                    Editar
+                </button>
+                <button className="btn danger" onClick={onDelete}>
                     Excluir
                 </button>
             </div>
